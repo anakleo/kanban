@@ -168,17 +168,24 @@ function migrate(d){
 }
 async function load(){
   setSyncStatus('syncing');
+  const dbg=document.createElement('div');
+  dbg.style.cssText='position:fixed;bottom:60px;left:10px;right:10px;background:#333;color:#fff;font-size:11px;padding:8px;border-radius:6px;z-index:9999;';
+  document.body.appendChild(dbg);
   try{
+    dbg.textContent='Loading from Supabase...';
     const d=await sbLoad();
+    dbg.textContent='Raw data: '+(d?'got '+JSON.stringify(Object.keys(d)):'null');
     state=migrate(d);
+    dbg.textContent='State boards: '+JSON.stringify(Object.keys(state.boards||{}));
     setSyncStatus('ok');
+    setTimeout(()=>dbg.remove(),5000);
   }catch(e){
-    console.error('Load error:',e);
+    dbg.textContent='ERROR: '+e.message;
+    dbg.style.background='#c00';
     state=JSON.parse(JSON.stringify(DEFAULTS));
     setSyncStatus('error');
   }
   render();
-  save();
 }
 async function save(){clearTimeout(saveTimer);saveTimer=setTimeout(async()=>{setSyncStatus('syncing');try{await sbSave(state);setSyncStatus('ok');}catch(e){setSyncStatus('error');}},500);}
 
