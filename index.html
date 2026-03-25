@@ -364,6 +364,8 @@ document.getElementById('pmOk').onclick=()=>{
 document.getElementById('aiClose').onclick=()=>document.getElementById('aiModal').classList.remove('open');
 [document.getElementById('boardModal'),document.getElementById('tlProjModal'),document.getElementById('phaseModal'),document.getElementById('aiModal')].forEach(m=>{m.onclick=e=>{if(e.target===m)m.classList.remove('open');};});
 
+document.getElementById('board-view').style.display='flex';
+document.getElementById('timeline-view').style.display='none';
 load();
 </script>
 </body>
