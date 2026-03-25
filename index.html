@@ -155,7 +155,15 @@ const dragTip=document.getElementById('dragTip');
 function setSyncStatus(s){const d=document.getElementById('syncDot');d.className='sync-dot'+(s==='syncing'?' syncing':s==='error'?' error':'');}
 async function sbLoad(){const r=await fetch(SB_URL+'/rest/v1/kanban_data?id=eq.main&select=data',{headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY}});if(!r.ok)throw new Error('fail');const rows=await r.json();if(Array.isArray(rows)&&rows.length>0&&rows[0].data&&Object.keys(rows[0].data).length>0)return rows[0].data;return null;}
 async function sbSave(data){await fetch(SB_URL+'/rest/v1/kanban_data',{method:'POST',headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json','Prefer':'resolution=merge-duplicates'},body:JSON.stringify({id:'main',data,updated_at:new Date().toISOString()}));}
-async function load(){setSyncStatus('syncing');try{const d=await sbLoad();if(d)state=d;else state=JSON.parse(JSON.stringify(DEFAULTS));setSyncStatus('ok');}catch(e){state=JSON.parse(JSON.stringify(DEFAULTS));setSyncStatus('error');}render();}
+function migrate(d){
+  if(!d||typeof d!=='object')return JSON.parse(JSON.stringify(DEFAULTS));
+  if(!d.boards){d.boards=JSON.parse(JSON.stringify(DEFAULTS.boards));d.activeBoard=DEFAULTS.activeBoard;}
+  if(!d.timelines){d.timelines=JSON.parse(JSON.stringify(DEFAULTS.timelines));d.activeTimeline=DEFAULTS.activeTimeline;}
+  if(!d.activeBoard||!d.boards[d.activeBoard])d.activeBoard=Object.keys(d.boards)[0];
+  if(!d.activeTimeline||!d.timelines[d.activeTimeline])d.activeTimeline=Object.keys(d.timelines)[0];
+  return d;
+}
+async function load(){setSyncStatus('syncing');try{const d=await sbLoad();state=migrate(d);setSyncStatus('ok');}catch(e){state=JSON.parse(JSON.stringify(DEFAULTS));setSyncStatus('error');}render();}
 async function save(){clearTimeout(saveTimer);saveTimer=setTimeout(async()=>{setSyncStatus('syncing');try{await sbSave(state);setSyncStatus('ok');}catch(e){setSyncStatus('error');}},500);}
 
 function curBoard(){return state.boards[state.activeBoard];}
