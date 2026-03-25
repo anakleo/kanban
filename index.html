@@ -65,7 +65,7 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:'Ma
 .g-dc.gt{color:#e24b4a;font-weight:600;}
 .g-row{display:flex;align-items:center;height:48px;margin-bottom:3px;}
 .g-lbl{width:100px;min-width:100px;font-size:11px;color:var(--muted);text-align:right;padding-right:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.g-track{flex:1;position:relative;height:48px;}
+.g-track{flex:1;position:relative;height:48px;overflow:visible;}
 .g-gl{position:absolute;top:0;bottom:0;width:1px;background:rgba(255,255,255,0.04);pointer-events:none;}
 .g-tl{position:absolute;top:-14px;bottom:0;width:1.5px;background:#e24b4a;z-index:5;pointer-events:none;}
 .g-tll{position:absolute;top:0;left:50%;transform:translateX(-50%);font-size:8px;color:#e24b4a;white-space:nowrap;}
@@ -79,7 +79,7 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:'Ma
 .g-ms{position:absolute;top:50%;transform:translate(-50%,-50%);width:14px;height:14px;border-radius:50%;border:2px solid;z-index:4;touch-action:none;}
 .g-mstip{position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:var(--surface);border:1px solid var(--border2);border-radius:6px;padding:4px 8px;font-size:10px;color:var(--text);white-space:nowrap;z-index:10;pointer-events:none;opacity:0;}
 .g-ms:hover .g-mstip{opacity:1;}
-.g-del{position:absolute;right:-16px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--muted);font-size:13px;padding:0;}
+.g-del{position:absolute;right:-22px;top:50%;transform:translateY(-50%);background:none;border:1px solid var(--border2);border-radius:4px;cursor:pointer;color:var(--muted);font-size:13px;padding:1px 5px;line-height:1;}
 .g-hint{font-size:11px;color:var(--muted);margin-top:10px;text-align:center;}
 .dtip{position:fixed;background:var(--surface);border:1px solid var(--border2);border-radius:6px;padding:4px 9px;font-size:11px;color:var(--text);pointer-events:none;z-index:999;display:none;}
 #action-bar{position:sticky;bottom:0;background:var(--surface);border-top:1px solid var(--border);padding:10px 16px;display:flex;gap:8px;flex-wrap:wrap;}
